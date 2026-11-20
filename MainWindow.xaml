@@ -86,6 +86,15 @@
 
         <StackPanel Grid.Column="1" Grid.Row="1"
             Orientation="Horizontal">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Benefit}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <TextBlock Text="Льгота:"/>
             <TextBlock Text="{Binding Benefit, StringFormat={} {0:P0}}"/>
         </StackPanel>

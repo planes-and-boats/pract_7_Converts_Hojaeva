@@ -36,7 +36,8 @@ namespace pract_7_Hojaeva.Models
             {
                 if (consumption != value)
                 {
-                    consumption = value;
+                    if (value < 0) consumption = 0;
+                    else consumption = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Payment));
                 }
@@ -50,7 +51,8 @@ namespace pract_7_Hojaeva.Models
             {
                 if (rate != value)
                 {
-                    rate = value;
+                    if (value < 0) rate = 0;
+                    else rate = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Payment));
                 }
@@ -64,7 +66,8 @@ namespace pract_7_Hojaeva.Models
             {
                 if (benefit != value)
                 {
-                    benefit = value;
+                    if (value < 0) benefit = 0;
+                    else benefit = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Payment));
                 }
