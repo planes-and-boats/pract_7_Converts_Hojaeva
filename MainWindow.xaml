@@ -1,0 +1,112 @@
+﻿<Window x:Class="pract_7_Hojaeva.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pract_7_Hojaeva"
+        xmlns:models="clr-namespace:pract_7_Hojaeva.Models"
+        xmlns:converters="clr-namespace:pract_7_Hojaeva.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <models:ElectricityUsage x:Key="ElectricityUsage"/>
+        <converters:DiscountConverter x:Key="DiscountConverter"/>
+        <converters:DiscountToColorConverter x:Key="DiscountToColorConverter"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <Binding Source="{StaticResource ElectricityUsage}"/>
+    </Window.DataContext>
+
+<Grid Margin="20">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="5,5,15,5"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="2"/>
+            </Style>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0"
+                    Orientation="Horizontal">
+            <TextBlock Text="Адрес:"/>
+            <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1"
+                    Orientation="Horizontal">
+            <TextBlock Text="Льгота:"/>
+            <TextBox Text="{Binding Benefit, Converter={StaticResource DiscountConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="2"
+                    Orientation="Horizontal">
+            <TextBlock Text="Потребление:"/>
+            <TextBox Text="{Binding Consumption, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="3"
+                    Orientation="Horizontal">
+            <TextBlock Text="Ставка:"/>
+            <TextBox Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        
+        <StackPanel Grid.Column="0" Grid.Row="4"
+                    Orientation="Horizontal">
+            <TextBlock Text="К оплате:"/>
+            <TextBox IsReadOnly="True" Text="{Binding Payment, StringFormat={} {0:C}, ConverterCulture=ru-Ru, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Grid.Row="0"
+            Orientation="Horizontal">
+            <TextBlock Text="Адрес:"/>
+            <TextBlock Text="{Binding Address}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1"
+            Orientation="Horizontal">
+            <TextBlock Text="Льгота:"/>
+            <TextBlock Text="{Binding Benefit, StringFormat={} {0:P0}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="2"
+            Orientation="Horizontal">
+            <TextBlock Text="Потребление:"/>
+            <TextBlock Text="{Binding Consumption, StringFormat={} {0} кВт·ч}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="3"
+            Orientation="Horizontal">
+            <TextBlock Text="Ставка:"/>
+            <TextBlock Text="{Binding Rate, StringFormat={} {0:C} / кВт·ч, ConverterCulture=ru-Ru}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="4"
+            Orientation="Horizontal">
+            <TextBlock Text="К оплате:"/>
+            <TextBlock Text="{Binding Payment, StringFormat={} {0:C}, ConverterCulture=ru-Ru}" Foreground="{Binding Benefit, Converter={StaticResource DiscountToColorConverter}}"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
